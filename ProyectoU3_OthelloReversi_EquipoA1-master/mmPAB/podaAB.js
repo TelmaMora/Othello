@@ -14,6 +14,14 @@ var tab=[[0,1,2,3,4,5,6,7],
 [40,41,42,43,44,45,46,47],
 [48,49,50,51,52,53,54,55],
 [56,57,58,59,60,61,62,63]];
+var tab2=[[0,8,16,24,32,40,48,56],
+[1,9,17,25,33,41,49,57],
+[2,10,18,26,34,42,50,58],
+[3,11,19,27,35,43,51,59],
+[4,12,20,28,36,44,52,60],
+[5,13,21,29,37,45,53,61],
+[6,14,22,30,38,46,54,62],
+[7,15,23,31,39,47,55,63]];
 
 window.onload = function(){
 	var tableroElem = document.getElementById('tablero');
@@ -37,7 +45,6 @@ function metodoinitTablero(){
 	tablero[index(5,5)]='White';
 
 	$('#idturnoGamer').text('Turno de la ficha : '+jugadorActual);
-	$('#instruccion').text('Da click sobre el tablero para que la maquina elija su jugada');
 	metodoActualizarPiezaTablero();	
 	definirPuntuaciones();
 }
@@ -57,7 +64,6 @@ function metodoTableroClicked(e){
 		actualizarPuntuaciones();
 	}
 }
-
 
 function metodoRevisarTirada(row, col, orientacion, jugador){
 	var tirada = true;
@@ -135,61 +141,16 @@ function metodoCambiarGamer(jugador){
 		return 'White';
 }
 
-function convertir(tablero){
-	var aux=[];
-	var aux1=[];
-	var aux2=[];
-	var aux3=[];
-	var aux4=[];
-	var aux5=[];
-	var aux6=[];
-	var aux7=[];
-	var M=[];
-	for(var i=0; i<8;i++){
-		aux.push(tablero[i]);
-	}
-	M.push(aux);
-	for(var i=8; i<16;i++){
-		aux1.push(tablero[i]);
-	}
-	M.push(aux1);
-	for(var i=16; i<24;i++){
-		aux2.push(tablero[i]);
-	}
-	M.push(aux2);
-	for(var i=24; i<32;i++){
-		aux3.push(tablero[i]);
-	}
-	M.push(aux3);
-	for(var i=32; i<40;i++){
-		aux4.push(tablero[i]);
-	}
-	M.push(aux4);
-	for(var i=40; i<48;i++){
-		aux5.push(tablero[i]);
-	}
-	M.push(aux5);
-	for(var i=48; i<56;i++){
-		aux6.push(tablero[i]);
-	}
-	M.push(aux6);
-	for(var i=56; i<64;i++){
-		aux7.push(tablero[i]);
-	}
-	M.push(aux7);
-	return M;
-
-}
 
 function ubicarPiezas(r, c, player, M){
-	aux2=[];
-
+	var aux2=[];
 	if(M[r][c] != null) {
 		return [];
 	}        
-	totalFlipped =   []               
-	flipped = [];
-	if(c < 6 && M[r][c+1] == metodoCambiarGamer(player)){
+	var totalFlipped =   []               
+	var flipped = [];
+	var j=metodoCambiarGamer(player);
+	if(c < 6 && M[r][c+1] == j){
 		for(var n=1; n<9; n++){
 			if(c+n > 7 || M[r][c+n] == null){
 				flipped = [];
@@ -204,7 +165,7 @@ function ubicarPiezas(r, c, player, M){
 	totalFlipped=totalFlipped.concat(flipped);
 
 	flipped = [];
-	if(r < 6 && M[r+1][c] == metodoCambiarGamer(player)){
+	if(r < 6 && M[r+1][c] == j){
 		for(var n=1; n<9; n++){
 			if(r+n > 7 || M[r+n][c] == null){
 				flipped = [];
@@ -219,7 +180,7 @@ function ubicarPiezas(r, c, player, M){
 	totalFlipped=totalFlipped.concat(flipped);
 
 	flipped = [];
-	if(r > 1 && M[r-1][c] == metodoCambiarGamer(player)){
+	if(r > 1 && M[r-1][c] == j){
 		for(var n=1; n<9; n++){
 			if(r-n < 0 || M[r-n][c] == null){
 				flipped = [];
@@ -235,7 +196,7 @@ function ubicarPiezas(r, c, player, M){
 
 
 	flipped = [];
-	if(c > 1 && M[r][c-1] == metodoCambiarGamer(player)){
+	if(c > 1 && M[r][c-1] == j){
 		for(var n=1; n<9; n++){
 			if(c-n < 0 || M[r][c-n] == null){
 				flipped = [];
@@ -250,7 +211,7 @@ function ubicarPiezas(r, c, player, M){
 
 
 	flipped = [];
-	if(r < 6 && c < 6 && M[r+1][c+1] == metodoCambiarGamer(player)){
+	if(r < 6 && c < 6 && M[r+1][c+1] == j){
 		for(var n=1; n<9; n++){
 			if((r+n) > 7 || (c+n) > 7 || M[r+n][c+n] == null){
 				flipped = [];
@@ -265,7 +226,7 @@ function ubicarPiezas(r, c, player, M){
 
 
 	flipped = [];
-	if(r > 0 && c > 0 && M[r-1][c-1] == metodoCambiarGamer(player)){
+	if(r > 0 && c > 0 && M[r-1][c-1] == j){
 		for(var n=1; n<9; n++){
 			if((r-n) < 0 || (c-n) < 0 || M[r-n][c-n] == null){
 				flipped = [];
@@ -279,7 +240,7 @@ function ubicarPiezas(r, c, player, M){
 	totalFlipped=totalFlipped.concat(flipped);
 
 	flipped = [];
-	if(r > 1 && c < 6 && M[r-1][c+1] == metodoCambiarGamer(player)){
+	if(r > 1 && c < 6 && M[r-1][c+1] == j){
 		for(var n=1; n<9; n++){
 			if((r-n) < 0 || (c+n) > 7 || M[r-n][c+n] == null){
 				flipped = [];
@@ -295,7 +256,7 @@ function ubicarPiezas(r, c, player, M){
 
 
 	flipped = [];
-	if(r < 6 && c > 1 && M[r+1][c-1] == metodoCambiarGamer(player)){
+	if(r < 6 && c > 1 && M[r+1][c-1] == j){
 		for(var n=1; n<9; n++){
 			if((r+n) > 7 || (c-n) < 0 || M[r+n][c-n] == null){
 				flipped = [];
@@ -314,45 +275,40 @@ function ubicarPiezas(r, c, player, M){
 
 
 function turnoMaquina(){
-	var movimiento = minimax(jugadorActual);
-	var index=movimiento[0];
+	tabaux2=tablero;
+	var maux=[];
+	var smatriz=[];
+	for (var x = 0; x < 8; x++) {
+		for (var y = 0; y < 8; y++) {
+			maux.push(tabaux2[tab[x][y]]);
+		}
+		smatriz.push(maux);
+		maux=[];
+	}
+	jugadaMaquina(smatriz);
 	
-	var row=movimiento[1][0][0];
-	var col=movimiento[1][0][1];
+}
+function jugadaMaquina(matriz){
+	console.log(matriz," En jugada Maquina");
+	
+	var movimiento = minimaxPrueba(matriz);
+	var index=tab[movimiento[0]][movimiento[1]];
 	tablero[index]=jugadorActual;
+	for (var i=0; i<movimiento[2].length; i++){
+		var row=movimiento[2][i][1];
+		var col=movimiento[2][i][0];
 	tablero[tab[col][row]] = jugadorActual;
+	}
 	metodoActualizarPiezaTablero();
 	jugadorActual = metodoCambiarGamer(jugadorActual);
 	$('#idturnoGamer').text('Turno de la ficha : '+jugadorActual);
 	actualizarPuntuaciones();
+
 }
 
-function getMoves(jugador, tablero){
-	var movimientos=[];
-	var aux=[];
-	var piezas=[];
-	var M = convertir(tablero);
-	for(var index = 0; index < 64; index++){
-		var cuadrado = metodoRowColTablero(index);
-	    var row = cuadrado[1]-1;
-	    var col = cuadrado[0]-1;
-	    if (tablero[index]== null){	
-	    	piezas=ubicarPiezas(row,col,jugador,M);
-	    	if(piezas.length!=0){
-	    		aux=[index,piezas];
-	    		movimientos.push(aux);
-	    	}
-	    }
-
-	}
-	return movimientos;
-}
-
-
-
-
-function minimax(jugador){
-	var movs=getMoves(jugador, tablero);
+function minimaxPrueba(mtz){
+	var movs=getMoves("White", mtz);
+	var tabaux=[];
 	var scores=[];
 	for(var i=0; i<movs.length; i++){
 		scores.push(0);
@@ -360,25 +316,52 @@ function minimax(jugador){
 	var alpha = Number.NEGATIVE_INFINITY;
 	var beta = Number.POSITIVE_INFINITY;
 	for(var j=0; j<movs.length; j++){
-		copiarTablero = fakeMove(movs[j], "White", jQuery.extend(true, {}, tablero));
+		copiarTablero = fakeMove(movs[j][0],movs[j][1],movs[j][2], "White", mtz);
 		scores[j]=maxMove(copiarTablero, 1, alpha, beta, PW, PB);
-
 	}
+
 	maxIndex=scores.indexOf(Math.max(...scores));
+	console.log(movs[maxIndex]);
 	return movs[maxIndex];
+
+}
+
+function getMoves(jugador, M){
+	var movimientos=[];
+	var aux=[];
+	var piezas=[];
+	var row;
+	var col;
+	for(var i=0; i<8; i++){
+		for(j=0;j<8;j++){
+			row=i;
+			col=j;
+			if (M[row][col]== null){	
+				piezas=ubicarPiezas(row,col,jugador,M);
+		    	if(piezas.length!=0){
+		    		aux=[row,col,piezas];
+		    		movimientos.push(aux);
+		    	}
+		    }
+		}
+	}
+	
+	return movimientos;
 }
 
 
 function maxMove(board, depth, alpha, beta, PW, PB){
-	var moves=getMoves("White",board)
+	console.log("Max")
+	var moves=getMoves(jugadorActual,board);
 	var scores=[];
 	var puntuaciones=[];
-	for(var i=0; i<=moves.length; i++){
+	var dcm1 = jQuery.extend(true, {}, board);
+	var ret
+	for(var i=0; i<moves.length; i++){
 		scores.push(0);
 	}
 	if(moves.length==0){
 		if(depth<=MAXDEPTH){
-
 			return minMove(board, depth+1, alpha, beta, PW, PB);
 		}
 		else{
@@ -387,8 +370,7 @@ function maxMove(board, depth, alpha, beta, PW, PB){
 	}
 
 	for(var j=0; j<moves.length; j++){
-		copiarTablero = fakeMove(moves[j], "White", jQuery.extend(true, {}, board));
-		console.log("max bc:",copiarTablero);
+		copiarTablero = fakeMove(moves[j][0],moves[j][1],moves[j][2], jugadorActual, dcm1);
 		puntuaciones=actualizarEsquinas(copiarTablero,PW,PB);
 		PW=puntuaciones[0];
 		PB=puntuaciones[1];
@@ -396,9 +378,7 @@ function maxMove(board, depth, alpha, beta, PW, PB){
 		PW=puntuaciones[0];
 		PB=puntuaciones[1];
 		if (depth>=MAXDEPTH) {
-
 			scores[j] = puntuacionesTab(copiarTablero, PW, PB);
-			
 		}
 		else{
 			scores[j] = minMove(copiarTablero,depth+1,alpha,beta,PW,PB);
@@ -411,16 +391,22 @@ function maxMove(board, depth, alpha, beta, PW, PB){
 			}
 		}
 	}
-	console.log(scores);
-	return Math.max(...scores);
+	console.log("scores max",scores);
+	ret=Math.max(...scores);
+	console.log("ret max",ret);
+	return ret;
 }	
 
 function minMove(board, depth, alpha, beta, PW, PB){
-	var moves=getMoves("Black",board);
-	var scores=[];
+	console.log("min");
+	var cg = metodoCambiarGamer(jugador);
+	var moves=getMoves(cg,board);
+	var scores1=[];
 	var puntuaciones=[];
-	for(var i=0; i<=moves.length; i++){
-		scores.push(0);
+	var dcm2 = jQuery.extend(true, {}, board);
+	var ret=[];
+	for(var i=0; i<moves.length; i++){
+		scores1.push(0);
 	}
 	if(moves.length==0){
 		if(depth<=MAXDEPTH){
@@ -432,8 +418,7 @@ function minMove(board, depth, alpha, beta, PW, PB){
 	}
 
 	for(var j=0; j<moves.length; j++){
-		copiarTablero = fakeMove(moves[j], "Black", jQuery.extend(true, {}, board));
-		
+		copiarTablero = fakeMove(moves[j][0],moves[j][1],moves[j][2], cg, dcm2);
 		puntuaciones=actualizarEsquinas(copiarTablero,PW,PB);
 		PW=puntuaciones[0];
 		PB=puntuaciones[1];
@@ -441,61 +426,59 @@ function minMove(board, depth, alpha, beta, PW, PB){
 		PW=puntuaciones[0];
 		PB=puntuaciones[1];
 		if (depth>=MAXDEPTH) {
-			scores[j] = puntuacionesTab(copiarTablero, PW, PB);
-			
+			scores1[j] = puntuacionesTab(copiarTablero, PW, PB);
 		}
 		else{
-			scores[j] = maxMove(copiarTablero,depth+1,alpha,beta,PW,PB);
-			if (beta>scores[j]) {
-				beta=scores[j];
+			scores1[j] = maxMove(copiarTablero,depth+1,alpha,beta,PW,PB);
+			if (beta>scores1[j]) {
+				beta = scores1[j];
 			}
 			if (beta<=alpha) {
-				return scores[j];
+				return scores1[j];
 			}
 		}
 	}
-	
-	return Math.min(...scores);
+	console.log("scores min",scores1);
+	ret=Math.min(...scores1);
+	console.log("ret min",ret);
+	return ret;
 }	
 function puntuacionesTab(M, PW, PB){
-	totalC = 0
-	totalH = 0
-	for(var j=0; j<64; j++){
-		if(M[j] == "White"){
-			totalC += PW[j];
-		}
-		if(M[j] == "Black"){
-			totalH += PB[j];
-		}
-	}
-	return  totalC - totalH;
-}
-function fakeMove(movimiento, player, M){
-	var p=movimiento[0];
-	var volteadas=movimiento[1];
-	var row=0;
-	var col=0;
-	if(M[p] == null){ 
-		M[p] = player;
-		opuestas = true;
-		for(var i=0; i<volteadas.length; i++){
-			row=volteadas[i][0];
-			col=volteadas[i][1];
-			if (M[tab[col][row]]==player) {
-				opuestas=false;
-				return M;
+	var totalC = 0
+	var totalH = 0
+	var auxc=0
+	var total=0;
+	for(var j=0; j<8; j++){
+		for (var i = 0; i < 8; i++) {
+			if(M[i][j] == "White"){
+			totalC = totalC+PW[auxc];
 			}
-			else{
-				M[tab[col][row]] = player;
+			if(M[j][i] == "Black"){
+				totalH = totalH+PB[auxc];
 			}
-		console.log("op",opuestas);
+			auxc++;
 		}
 		
 	}
-	else{
-		return M;
+	total=totalC - totalH
+	return  total;
+}
+function fakeMove(r,c,volteadas, player, M){
+	var dcm = jQuery.extend(true, {}, M);
+	var opuestas;
+	if(dcm[r][c] == null){ 
+		dcm[r][c] = player;
+		opuestas=true;
+		for(var j = 0; j < volteadas.length; j++){
+			dcm[volteadas[j][0]][volteadas[j][1]] = player;
+		}
 	}
-	return M;
+	else{
+		return dcm;
+	}
+	return dcm;
+
+
 }
 
 function definirPuntuaciones(){
